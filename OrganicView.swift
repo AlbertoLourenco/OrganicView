@@ -8,53 +8,128 @@
 
 import UIKit
 
+struct MorphConfig {
+    
+    var frame: CGRect = .zero
+    var duration: CFTimeInterval = 3
+    var rotationEnabled: Bool = true
+    
+    var shapeStart: CAShapeLayer!
+    var shapeEnd: CAShapeLayer!
+    
+    var colorsStart: Array<CGColor> = []
+    var colorsEnd: Array<CGColor> = []
+    
+    var backgroundColor: UIColor = .clear
+    
+    init(frame: CGRect = .zero,
+         duration: CFTimeInterval = 3,
+         rotationEnabled: Bool,
+         shapeStart: CAShapeLayer,
+         shapeEnd: CAShapeLayer,
+         colorsStart: Array<CGColor>,
+         colorsEnd: Array<CGColor>,
+         backgroundColor: UIColor) {
+        
+        self.frame = frame
+        self.duration = duration
+        self.rotationEnabled = rotationEnabled
+        self.shapeStart = shapeStart
+        self.shapeEnd = shapeEnd
+        self.colorsStart = colorsStart
+        self.colorsEnd = colorsEnd
+        self.backgroundColor = backgroundColor
+    }
+    
+    init(frame: CGRect = .zero,
+         duration: CFTimeInterval = 3,
+         rotationEnabled: Bool,
+         colorsStart: Array<CGColor>,
+         colorsEnd: Array<CGColor>,
+         backgroundColor: UIColor) {
+        
+        self.frame = frame
+        self.duration = duration
+        self.rotationEnabled = rotationEnabled
+        
+        self.shapeStart = OrganicShape(frame: frame, type: .start)
+        self.shapeEnd = OrganicShape(frame: frame, type: .end)
+        
+        self.colorsStart = colorsStart
+        self.colorsEnd = colorsEnd
+        self.backgroundColor = backgroundColor
+    }
+}
+
 class OrganicView: UIView {
     
-    init(frame: CGRect, colors: Array<CGColor>, duration: CFTimeInterval) {
-        super.init(frame: frame)
+    private var config: MorphConfig!
+    
+    init(config: MorphConfig) {
+        super.init(frame: config.frame)
         
-        self.backgroundColor = .clear
+        self.config = config
+        
+        self.backgroundColor = config.backgroundColor
         self.center = frame.origin
-        self.layer.addSublayer(self.shapeAnimation(frame: frame, colors: colors, duration: duration))
+        self.layer.addSublayer(self.shapeAnimation())
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) not implemented")
     }
     
-    private func shapeAnimation(frame: CGRect, colors: Array<CGColor>, duration: CFTimeInterval) -> CAGradientLayer {
+    private func shapeAnimation() -> CAGradientLayer {
         
-        let shapeStart = OrganicShape(frame: frame, type: .start)
-        let shapeEnd = OrganicShape(frame: frame, type: .end)
-
-        let animation = CABasicAnimation(keyPath: "path")
-        animation.fromValue = shapeStart.path
-        animation.toValue = shapeEnd.path
-        animation.duration = duration
-        animation.autoreverses = true
-        animation.repeatCount = Float(CGFloat.greatestFiniteMagnitude)
+        //  Animations
+        
+        let animationMorph = CABasicAnimation(keyPath: "path")
+        animationMorph.fromValue = config.shapeStart.path
+        animationMorph.toValue = config.shapeEnd.path
+        animationMorph.duration = config.duration
+        animationMorph.autoreverses = true
+        animationMorph.repeatCount = Float.infinity
+        
+        let animationRotation = CABasicAnimation(keyPath: "transform.rotation")
+        animationRotation.byValue = NSNumber(value: -Double.pi * 2)
+        animationRotation.duration = config.duration * 20
+        animationRotation.repeatCount = Float.infinity
+        
+        let animationGradient = CABasicAnimation(keyPath: "colors")
+        animationGradient.fromValue = config.colorsStart
+        animationGradient.toValue = config.colorsEnd
+        animationGradient.duration = config.duration
+        animationGradient.autoreverses = true
+        animationGradient.repeatCount = Float.infinity
+        
+        //  Layers
         
         let maskLayer = CAShapeLayer(layer: self.layer)
         maskLayer.frame = self.bounds
-        maskLayer.path = shapeStart.path
+        maskLayer.path = config.shapeStart.path
         maskLayer.fillColor = UIColor.yellow.cgColor
         maskLayer.strokeColor = UIColor.blue.cgColor
         maskLayer.lineWidth = 2
-        maskLayer.add(animation, forKey: "animationPath")
+        maskLayer.add(animationMorph, forKey: "animationPath")
+        
+        if config.rotationEnabled {
+            maskLayer.add(animationRotation, forKey: "rotation")
+        }
         
         let gradient = CAGradientLayer()
-        gradient.frame = shapeStart.frame
-        gradient.colors = colors
-        gradient.startPoint = CGPoint(x: 0, y: 1)
-        gradient.endPoint = CGPoint(x: 1, y: 0)
+        gradient.frame = config.shapeStart.frame
+        gradient.colors = config.colorsStart
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 0.5, y: 0)
         gradient.mask = maskLayer
         gradient.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+        gradient.add(animationGradient, forKey: "animationGradient")
         
         return gradient
     }
 }
 
-class OrganicShape: CAShapeLayer {
+fileprivate class OrganicShape: CAShapeLayer {
     
     enum OrganicShapeType {
         case start
