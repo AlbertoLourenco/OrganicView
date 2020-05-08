@@ -71,7 +71,6 @@ class OrganicView: UIView {
         self.config = config
         
         self.backgroundColor = config.backgroundColor
-        self.center = frame.origin
         self.layer.addSublayer(self.shapeAnimation())
     }
     
@@ -104,25 +103,24 @@ class OrganicView: UIView {
         
         //  Layers
         
-        let maskLayer = CAShapeLayer(layer: self.layer)
-        maskLayer.frame = self.bounds
-        maskLayer.path = config.shapeStart.path
-        maskLayer.fillColor = UIColor.yellow.cgColor
-        maskLayer.strokeColor = UIColor.blue.cgColor
-        maskLayer.lineWidth = 2
-        maskLayer.add(animationMorph, forKey: "animationPath")
+        let shapeLayer = CAShapeLayer(layer: self.layer)
+        shapeLayer.frame = config.frame
+        shapeLayer.path = config.shapeStart.path
+        shapeLayer.fillColor = UIColor.yellow.cgColor
+        shapeLayer.strokeColor = UIColor.blue.cgColor
+        shapeLayer.lineWidth = 2
+        shapeLayer.add(animationMorph, forKey: "animationPath")
         
         if config.rotationEnabled {
-            maskLayer.add(animationRotation, forKey: "rotation")
+            shapeLayer.add(animationRotation, forKey: "rotation")
         }
         
         let gradient = CAGradientLayer()
-        gradient.frame = config.shapeStart.frame
+        gradient.frame = config.frame
         gradient.colors = config.colorsStart
         gradient.startPoint = CGPoint(x: 0, y: 0.5)
         gradient.endPoint = CGPoint(x: 0.5, y: 0)
-        gradient.mask = maskLayer
-        gradient.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+        gradient.mask = shapeLayer
         gradient.add(animationGradient, forKey: "animationGradient")
         
         return gradient

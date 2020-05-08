@@ -13,7 +13,7 @@
 		16208FC0245F31F200842584 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16208FBE245F31F200842584 /* Main.storyboard */; };
 		16208FC2245F31F300842584 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16208FC1245F31F300842584 /* Assets.xcassets */; };
 		16208FC5245F31F300842584 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16208FC3245F31F300842584 /* LaunchScreen.storyboard */; };
-		16CD37002461B31B00E5637B /* OrganicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CD36FF2461B31B00E5637B /* OrganicView.swift */; };
+		16C6E24E246596D900CF09BE /* OrganicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6E24D246596D900CF09BE /* OrganicView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		16208FC1245F31F300842584 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16208FC4245F31F300842584 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		16208FC6245F31F300842584 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		16CD36FF2461B31B00E5637B /* OrganicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganicView.swift; sourceTree = "<group>"; };
+		16C6E24D246596D900CF09BE /* OrganicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrganicView.swift; path = ../../OrganicView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +42,7 @@
 		16208FAC245F31F200842584 = {
 			isa = PBXGroup;
 			children = (
-				16CD36FF2461B31B00E5637B /* OrganicView.swift */,
+				16C6E24D246596D900CF09BE /* OrganicView.swift */,
 				16208FB7245F31F200842584 /* OrganicDemo */,
 				16208FB6245F31F200842584 /* Products */,
 			);
@@ -151,7 +151,7 @@
 			files = (
 				16208FBD245F31F200842584 /* ViewController.swift in Sources */,
 				16208FB9245F31F200842584 /* AppDelegate.swift in Sources */,
-				16CD37002461B31B00E5637B /* OrganicView.swift in Sources */,
+				16C6E24E246596D900CF09BE /* OrganicView.swift in Sources */,
 				16208FBB245F31F200842584 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
