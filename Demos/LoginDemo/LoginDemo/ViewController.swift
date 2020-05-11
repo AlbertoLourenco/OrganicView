@@ -51,7 +51,7 @@ class ViewController: UIViewController {
     func getOrganicView(view: UIView) -> OrganicView {
         
         let colorsStart: Array<CGColor> = [UIColor.blue.cgColor, UIColor.red.cgColor]
-        let colorsEnd: Array<CGColor> = [UIColor.green.cgColor, UIColor.blue.cgColor]
+        let colorsEnd: Array<CGColor> = [UIColor.purple.cgColor, UIColor.orange.cgColor]
         let frame: CGRect = CGRect(origin: .zero, size: CGSize(width: view.bounds.width + 200,
                                                                height: view.bounds.height + 200))
         
