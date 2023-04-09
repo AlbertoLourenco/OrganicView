@@ -1,4 +1,4 @@
-![cover](https://raw.githubusercontent.com/AlbertoLourenco/OrganicView/27ae10831d3040019cba8dcc8f51854410862653/github-assets/cover.png)
+![cover](https://raw.githubusercontent.com/AlbertoLourenco/OrganicView/master/github-assets/cover.png)
 
 A simple view with organic animation.
 
