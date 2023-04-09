@@ -4,7 +4,7 @@ A simple view with organic animation.
 
 ## How to use
 
-First of all, you'll ne to create a MorphConfig object to set all of animation attributes. Seomthing like that:
+First of all, you'll need to create a MorphConfig object to set all of animation attributes. Seomthing like that:
 
 ```swift
 let config = MorphConfig(size: CGSize(width: view.bounds.width + 200,
