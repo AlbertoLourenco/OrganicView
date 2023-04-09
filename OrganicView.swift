@@ -22,7 +22,7 @@ struct MorphConfig {
     
     var backgroundColor: UIColor = .clear
     
-    init(frame: CGRect = .zero,
+    init(size: CGSize = .zero,
          duration: CFTimeInterval = 3,
          rotationEnabled: Bool,
          shapeStart: CAShapeLayer,
@@ -31,7 +31,7 @@ struct MorphConfig {
          colorsEnd: Array<CGColor>,
          backgroundColor: UIColor) {
         
-        self.frame = frame
+        self.frame = CGRect(origin: .zero, size: size)
         self.duration = duration
         self.rotationEnabled = rotationEnabled
         self.shapeStart = shapeStart
@@ -41,14 +41,14 @@ struct MorphConfig {
         self.backgroundColor = backgroundColor
     }
     
-    init(frame: CGRect = .zero,
+    init(size: CGSize = .zero,
          duration: CFTimeInterval = 3,
          rotationEnabled: Bool,
          colorsStart: Array<CGColor>,
          colorsEnd: Array<CGColor>,
          backgroundColor: UIColor) {
         
-        self.frame = frame
+        self.frame = CGRect(origin: .zero, size: size)
         self.duration = duration
         self.rotationEnabled = rotationEnabled
         
@@ -61,21 +61,22 @@ struct MorphConfig {
     }
 }
 
-class OrganicView: UIView {
+@IBDesignable
+final class OrganicView: UIView {
     
     private var config: MorphConfig!
     
-    init(config: MorphConfig) {
-        super.init(frame: config.frame)
+    func apply(config: MorphConfig) {
         
         self.config = config
         
         self.backgroundColor = config.backgroundColor
+        
+        self.layer.removeAllAnimations()
+        for sublayer in self.layer.sublayers ?? [] {
+            sublayer.removeFromSuperlayer()
+        }
         self.layer.addSublayer(self.shapeAnimation())
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) not implemented")
     }
     
     private func shapeAnimation() -> CAGradientLayer {
@@ -103,8 +104,10 @@ class OrganicView: UIView {
         
         //  Layers
         
+        let shapeFrame = CGRect(origin: .zero, size: config.frame.size)
+        
         let shapeLayer = CAShapeLayer(layer: self.layer)
-        shapeLayer.frame = config.frame
+        shapeLayer.frame = shapeFrame
         shapeLayer.path = config.shapeStart.path
         shapeLayer.fillColor = UIColor.yellow.cgColor
         shapeLayer.strokeColor = UIColor.blue.cgColor
@@ -116,7 +119,7 @@ class OrganicView: UIView {
         }
         
         let gradient = CAGradientLayer()
-        gradient.frame = config.frame
+        gradient.frame = shapeFrame
         gradient.colors = config.colorsStart
         gradient.startPoint = CGPoint(x: 0, y: 0.5)
         gradient.endPoint = CGPoint(x: 0.5, y: 0)
