@@ -9,11 +9,11 @@ First of all, you'll need to create a `MorphConfig` object to set all of animati
 ```swift
 let config = MorphConfig(size: CGSize(width: view.bounds.width + 200,
                                       height: view.bounds.height + 200),
-                                 duration: 10,
-                                 rotationEnabled: true,
-                                 colorsStart: colorsStart,
-                                 colorsEnd: colorsEnd,
-                                 backgroundColor: .clear)
+                         duration: 10,
+                         rotationEnabled: true,
+                         colorsStart: colorsStart,
+                         colorsEnd: colorsEnd,
+                         backgroundColor: .clear)
 ```
 
 And after that, you can implement the animation using Storybord or view code.
