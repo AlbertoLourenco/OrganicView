@@ -22,7 +22,7 @@ And after that, you can implement the animation using Storybord or view code.
 
 ```swift
 @IBOutlet private weak var vwOrganic: OrganicView!
-...
+// ...
 self.vwOrganic.apply(config: config)
 ```
 
